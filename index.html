@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Violet 💜</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Nunito:wght@300;400&display=swap');
+
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #f6f2fa, #e9def5);
+    font-family: 'Nunito', sans-serif;
+    color: #3a2f4f;
+    overflow-x: hidden;
+    cursor: url("cursor-default.png") 24 24, auto;
+}
+/* ---------- SECTIONS ---------- */
+section {
+    min-height: 100vh;
+    padding: 60px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.4s ease;
+}
+section.fade-out { opacity: 0; }
+
+/* ---------- CARDS ---------- */
+.card {
+    width: 100%;
+    background: rgba(255,255,255,0.92);
+    padding: 45px;
+    border-radius: 22px;
+    box-shadow: 0 15px 50px rgba(90,60,130,0.12);
+    position: relative;
+}
+.card-small { max-width: 620px; }
+.card-large { max-width: 760px; }
+
+/* Glow */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(180,140,216,0.35), transparent 70%);
+    filter: blur(30px);
+    z-index: -1;
+    animation: glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse {
+    0%,100% { opacity: 0.6; }
+    50% { opacity: 0.9; }
+}
+
+/* ---------- TYPOGRAPHY ---------- */
+h1,h2 { font-family: 'Playfair Display', serif; }
+h1 { font-size: 2.6em; color: #5b3b8c; }
+h2 { font-size: 1.9em; color: #6b4ca3; }
+p { font-size: 1.1em; line-height: 1.85; }
+
+/* ---------- BUTTONS ---------- */
+button {
+    margin-top: 28px;
+    padding: 13px 30px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg,#c7a8e5,#b48cd8);
+    color: #2f1f4f;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(120,90,170,0.25);
+}
+button:hover { transform: translateY(-2px); }
+
+/* ---------- STARS ---------- */
+.star {
+    position: fixed;
+    top: -10px;
+    color: #cbb6e9;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+@keyframes fall { to { transform: translateY(110vh); } }
+
+/* ---------- FROG ---------- */
+.frog {
+    font-size: 2.4em;
+    animation: float 4s ease-in-out infinite;
+    cursor: pointer;
+    filter: drop-shadow(0 0 6px rgba(180,140,216,0.4));
+}
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+.frog:active {
+    transform: scale(1.15);
+}
+
+/* ---------- IMAGES ---------- */
+.center-img {
+    max-width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(120,90,170,0.25);
+}
+
+/* ---------- DIALOGUE BOX ---------- */
+.dialogue-box {
+    background: rgba(245,240,255,0.95);
+    border: 2px solid #c9b6ea;
+    border-radius: 18px;
+    padding: 20px 25px;
+    margin-top: 25px;
+}
+
+/* ---------- LETTER ---------- */
+.scroll-wrapper { position: relative; }
+.scroll-content {
+    background: linear-gradient(#fdf8ef,#f6ecd9);
+    border: 2px solid #d8c6a3;
+    border-radius: 20px;
+    padding: 50px 40px;
+    max-height: 60vh;
+    overflow-y: auto;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    color: #5a4632;
+}
+.letter-cat {
+    position: absolute;
+    top: -58px;
+    right: 32px;
+    width: 110px;
+    cursor: pointer;
+}
+
+/* ---------- FAMILY ---------- */
+.family-wrapper { position: relative; }
+.family-video {
+    width: 100%;
+    border-radius: 18px;
+}
+/* ---------- FAMILY BUBBLE ---------- */
+.family-bubble {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 3px solid #c9b6ea;
+    border-radius: 26px;
+    padding: 20px 30px;
+    font-size: 1.1em;
+    color: #5b3b8c;
+    box-shadow: 0 12px 30px rgba(120,90,170,0.3);
+    z-index: 5;
+    animation: bubbleFloat 4s ease-in-out infinite;
+}
+
+.family-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 16px solid #ffffff;
+}
+
+@keyframes bubbleFloat {
+    0%,100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -4px); }
+}
+
+/* ---------- SECRET MESSAGE ---------- */
+#secretMessage {
+    display:none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    padding: 20px 28px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(120,90,170,0.3);
+    z-index: 999;
+}
+/* ---------- Rickroll Easter Egg (BASE) ---------- */
+.easter-egg {
+    position: fixed;
+    top: 16px;
+    right: 18px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: rgba(255,255,255,0.75);
+    border: 2px solid #c9b6ea;
+
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #6b4ca3;
+    text-decoration: none;
+
+    box-shadow: 0 6px 18px rgba(120,90,170,0.25);
+    backdrop-filter: blur(6px);
+
+    cursor: pointer;
+    z-index: 9999;
+
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.easter-egg:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.95);
+}
+.caption {
+    margin-top: 18px;
+    font-size: 0.95em;
+    color: #6b4ca3;
+    font-style: italic;
+}
+/* ---------- CAKE (FINAL MOMENT) ---------- */
+.cake {
+    position: absolute;
+    bottom: 0px;          /* aligns with frog baseline */
+    left: calc(50% + 20px); /* sits just to the right of frog */
+
+    font-size: 2.2em;       /* bigger, celebratory */
+
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+    pointer-events: none;
+}
+
+.cake.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ---------- RICKROLL ---------- */
+/* Tooltip for ? */
+.easter-egg .tooltip {
+    position: absolute;
+    top: 44px;
+    right: 0;
+
+    background: rgba(255,255,255,0.95);
+    color: #6b4ca3;
+
+    padding: 6px 10px;
+    border-radius: 12px;
+
+    font-size: 0.75em;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+
+    box-shadow: 0 6px 18px rgba(120,90,170,0.2);
+
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform: translateY(-4px);
+}
+
+.easter-egg:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- CHUUYA ---------- */
+.constants-card { position: relative; }
+
+.chuuya-quiet {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    width: 80px;
+    cursor: pointer;
+    opacity: 0.9;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.15));
+}
+
+.chuuya-tooltip {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    color: #6b4ca3;
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 0.75em;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(120,90,170,0.2);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 999;
+    pointer-events: none;
+}
+.chuuya-tooltip.show { opacity: 1; }
+
+@keyframes chuuyaSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.chuuya-spin { animation: chuuyaSpin 0.6s ease; }
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" src="liyue-ambient.mp3" loop></audio>
+
+<a
+  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="easter-egg"
+>
+  ?
+  <span class="tooltip">Paimon: What’s this?</span>
+</a>
+
+<!-- INTRO -->
+<section>
+<div class="card card-small">
+<div class="frog">🐸</div>
+<h1>Hey Violet.</h1>
+<p>Welcome to the New Year (Its your birthday! Yayyy), I made you a lil something, its not much but nonetheless here ya go. There are a few easter eggs, go find em if you can. MeOw (stretches like a cat) </p>
+<button onclick="startMusic(); nextSection()">Start 💜</button>
+</div>
+</section>
+
+<section style="display:none;"><div class="card card-small"><h2>Six years.</h2><p>Across noise and silence alike. Towards decades alight. Warmth of books, paper and a maze of shelves, covered, in the delight of petrichor.</p><button onclick="nextSection()"> Continue 👑</button></div></section>
+
+<section style="display:none;"><div class="card card-small"><h2>The quieter truth</h2><p>Distance might exist, in the stillness, it will vanish.</p><button onclick="nextSection()"> What? </button></div></section>
+
+<section style="display:none;">
+<div class="card card-small constants-card">
+<h2>Some constants</h2>
+<p>Breathe!. Soft chaos.<br>Getting overwhelmed and needing space, that's alright, stay hydrated, slow down, take a pause, close your eyes, imagine the world, imagine your happiness, breathe, be you, be free, for a bird is freedom, for creatures of heaven are caged, but not of hell. Music and beauty may be a sin, but so be it.</p>
+<img src="chuuya.png" class="chuuya-quiet" id="chuuyaQuiet">
+<button onclick="nextSection()"> The fuck you talking about? ⭐</button>
+</div>
+</section>
+
+<section style="display:none;">
+<div class="card card-large">
+<img src="characters.png" class="center-img">
+<div class="dialogue-box">Happy Birthday, Violet! Cheers to more fun, adventures, craziness and bakchodi in life. 💜 <br>
+<i>You once named me Dazai.
+That stayed with me more than you know.</i> <br> The <em>Cats</em> may their blessing be with you.</div>
+<button onclick="nextSection()">Still more? Alright, go. </button>
+</div>
+</section>
+
+<section style="display:none;">
+<div class="card card-large">
+<div class="scroll-wrapper">
+<img src="cat-yawn.gif" class="letter-cat" id="letterCat">
+<div class="scroll-content">
+<p>Dear Violet,</p>
+
+<p>
+Happy Birthday, Bestie.<br>
+(And if I don’t have that privilege anymore, I understand, I apologize, I wouldn’t fault you.)<br>
+And a very Happy New Year to you too. Welcome to another year of Violet and, of course, the year of the Frog 🌙🐸.
+</p>
+
+<p>
+It’s been a long time since we’ve known each other. Six years have gone by just like that. And in all that time, I know I haven’t always been the friend you deserved. It will always be my guilt and regret that I never reached out to you as much as you have ever done.
+</p>
+
+<p>
+Still, you have always been and still are, and will always be, my favorite, closest, and most cherished human. Keep shining the way you always have, like the moonlight gracing this Earth. You’ve always been the one with the coolest, chillest vibe in the group, and you still retain that crown. Chaotically charming, yet always the anchor of the family. You brought us together and made us stick naturally, effortlessly just like the way the moon brings the tides.
+</p>
+
+<p>
+I don’t want to sound cringe, alright? But this is me trying to express what I feel, wish you, in whatever way I'm able to. It's been a long time, since I have written anything for anyone (not even for myself these days), so bear with this stupid dazai.
+</p>
+
+<p>
+You’ve always been someone I cared about a lot and deeply, even during the time I disappeared. I let my guilt create distance thinking I didn’t deserve you. But I never stopped caring. I may not show it, but I do. So, do let me know, if ever you need anything, if of any help I am, in any way, if I'm of use to you ever, reach out to me, whenever, wherever and always, I will be there. I promise I’ll stop going out to buy milk packets now. (meow)
+</p>
+
+<p>
+Years of knowing you, the good old days…can't believe so much time has already passed, ahhh life~ always enigmatic. Cheers to more years. More years of you holding the crown. to greater happiness, and dreams coming to fruitious life, to more gaming, reading and chilling, and of course, more bullying poor Shiffy.
+</p>
+
+<p>
+Life may have its upsy downsies, but I know for sure, you will sail the waves like a pirate and dominate it. And if things ever get tough, know that we are here for you. I am here for you. You are more than capable of handling things on your own, but never ever hesitate to take our hands. Reach out and you will always find us. A single wish is enough.
+</p>
+
+<p>
+We’re rooting for you. Always.
+</p>
+
+<p>
+You have been the best friend one can only hope for, so much so, the kind even soulmates fall short of. I’ve always loved your music taste. I have always loved your music taste, since I have always been the odd one listening to music that is uncommon, different, or at least not the type that everybody listen to, thus, there exists a certain sense of belonging to see somebody who shares your music taste, for somebody, who doesn't belong anywhere, it's a sense of belonging.
+</p>
+
+<p>
+Thank you for giving me, letting me feel, what it feels like to belong somewhere, for home.<br>
+I wish you all my luck, for ya deserve it more than me.
+</p>
+
+<p>
+Thank you, bestie, love you the way you are.
+</p>
+
+<p>
+Regards,<br>
+Zazai 🐈‍⬛
+</p>
+</div>
+</div>
+<button onclick="nextSection()">Ewwwww...🐑</button>
+</div>
+</section>
+
+<section style="display:none;">
+<div class="card card-large">
+<div class="family-wrapper">
+
+<div class="family-bubble">
+Happy Birthday, Violet 💜<br>
+We’re always here for you.
+</div>
+
+<video
+  id="familyVideo"
+  class="family-video"
+  src="family.mp4"
+  autoplay
+  loop
+  muted
+  playsinline
+></video>
+
+</div>
+
+<div class="caption">— from your family</div>
+
+<div class="frog final-frog" onclick="finalMoment()">🐸</div>
+<div class="cake" id="cake">🎂</div>
+</div>
+</section>
+
+
+<div id="secretMessage">Some people don’t leave. They stay quietly.</div>
+
+<script>
+/* Sections */
+let current = 0;
+const sections = document.querySelectorAll("section");
+function nextSection() {
+    sections[current].classList.add("fade-out");
+    setTimeout(() => {
+        sections[current].style.display = "none";
+        current++;
+        sections[current].style.display = "flex";
+    }, 450);
+}
+
+/* Music */
+const bgm = document.getElementById("bgm");
+function startMusic() {
+    bgm.volume = 0.25;
+    bgm.play().catch(()=>{});
+}
+
+/* Stars */
+for (let i=0;i<25;i++){
+    const s=document.createElement("div");
+    s.className="star"; s.innerHTML="✦";
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=(6+Math.random()*6)+"s";
+    document.body.appendChild(s);
+}
+
+/* Cat */
+const cats=["cat-yawn.gif","scratch-cat-claws.gif","white-cat.gif","roll.gif","jump.gif"];
+let catIndex=0;
+document.getElementById("letterCat").onclick=()=>{
+    catIndex=(catIndex+1)%cats.length;
+    letterCat.src=cats[catIndex];
+};
+
+/* Final moment */
+const familyVideo=document.getElementById("familyVideo");
+let triggered=false;
+function finalMoment(){
+    document.getElementById("secretMessage").style.display="block";
+    document.getElementById("cake").classList.add("show");
+    if(!triggered){
+        familyVideo.muted=false;
+        familyVideo.volume=0.4;
+        const fade=setInterval(()=>{
+            if(bgm.volume>0.05) bgm.volume-=0.02;
+            else clearInterval(fade);
+        },200);
+        triggered=true;
+    }
+    setTimeout(()=>secretMessage.style.display="none",7000);
+}
+
+/* Chuuya */
+const chuuya=document.getElementById("chuuyaQuiet");
+const lines=["gravity is annoying.","tch. don't stare.","…you're still here?"];
+let last=-1;
+const tooltip=document.createElement("div");
+tooltip.className="chuuya-tooltip";
+document.body.appendChild(tooltip);
+
+chuuya.onmouseenter=()=>{
+    let i;
+    do{i=Math.floor(Math.random()*lines.length);}while(i===last);
+    last=i;
+    tooltip.textContent=lines[i];
+    const r=chuuya.getBoundingClientRect();
+    tooltip.style.left=r.left+"px";
+    tooltip.style.top=(r.top-36)+"px";
+    tooltip.classList.add("show");
+};
+chuuya.onmouseleave=()=>tooltip.classList.remove("show");
+chuuya.onclick=()=>{
+    chuuya.classList.add("chuuya-spin");
+    setTimeout(()=>chuuya.classList.remove("chuuya-spin"),600);
+};
+</script>
+
+</body>
+</html>
