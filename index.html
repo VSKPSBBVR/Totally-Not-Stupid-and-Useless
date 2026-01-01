@@ -293,25 +293,44 @@ button:hover { transform: translateY(-2px); }
 
 .chuuya-tooltip {
     position: absolute;
+
+    max-width: 260px;              
+    white-space: normal;          
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
     background: rgba(255,255,255,0.95);
     color: #6b4ca3;
-    padding: 8px 12px;
+
+    padding: 10px 14px;
     border-radius: 14px;
-    font-size: 0.75em;
-    white-space: nowrap;
+
+    font-size: 0.8em;
+    line-height: 1.45;
+
     box-shadow: 0 6px 18px rgba(120,90,170,0.2);
+
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transform-origin: top center;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform: translateY(4px);
+
     z-index: 999;
     pointer-events: none;
 }
-.chuuya-tooltip.show { opacity: 1; }
 
-@keyframes chuuyaSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.chuuya-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
 }
-.chuuya-spin { animation: chuuyaSpin 0.6s ease; }
+@keyframes chuuyaSpin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+}
+
+.chuuya-spin {
+    animation: chuuyaSpin 0.6s ease;
+}
 </style>
 </head>
 
@@ -520,23 +539,46 @@ const tooltip=document.createElement("div");
 tooltip.className="chuuya-tooltip";
 document.body.appendChild(tooltip);
 
-chuuya.onmouseenter=()=>{
+chuuya.addEventListener("click", (e) => {
+    e.stopPropagation();            // safety
+    chuuya.classList.remove("chuuya-spin"); // reset if spam-clicked
+    void chuuya.offsetWidth;        // force reflow
+    chuuya.classList.add("chuuya-spin");
+});
+chuuya.onmouseenter = () => {
     let i;
-    do{i=Math.floor(Math.random()*lines.length);}while(i===last);
-    last=i;
-    tooltip.textContent=lines[i];
-    const r=chuuya.getBoundingClientRect();
-    tooltip.style.left=r.left+"px";
-    tooltip.style.top=(r.top-36)+"px";
+    do {
+        i = Math.floor(Math.random() * lines.length);
+    } while (i === last);
+
+    last = i;
+    tooltip.textContent = lines[i];
+
+    const rect = chuuya.getBoundingClientRect();
+
+    let left = rect.left;
+    let top = rect.bottom + -80; // 👈 anchor to character
+
+    // Clamp horizontally
+    const maxLeft = window.innerWidth - 280;
+    if (left > maxLeft) left = maxLeft;
+    if (left < 10) left = 10;
+
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+
     tooltip.classList.add("show");
 };
-chuuya.onmouseleave=()=>tooltip.classList.remove("show");
-chuuya.onclick=()=>{
-    chuuya.classList.add("chuuya-spin");
-    setTimeout(()=>chuuya.classList.remove("chuuya-spin"),600);
-};
-</script>
 
+chuuya.onmouseleave = () => {
+    tooltip.classList.remove("show");
+};
+document.addEventListener("scroll", () => {
+    tooltip.classList.remove("show");
+});
+window.addEventListener("resize", () => {
+    tooltip.classList.remove("show");
+});
+</script>
 </body>
 </html>
-
